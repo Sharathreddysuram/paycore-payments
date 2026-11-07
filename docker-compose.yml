@@ -1,0 +1,31 @@
+# Databases for the PayCore microservices. Each service owns its schema
+# (database-per-service); the two Postgres instances keep that boundary
+# visible even in local development.
+services:
+  postgres-accounts:
+    image: postgres:16
+    container_name: paycore-postgres-accounts
+    environment:
+      POSTGRES_DB: accountsdb
+      POSTGRES_USER: accounts
+      POSTGRES_PASSWORD: accounts
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata-accounts:/var/lib/postgresql/data
+
+  postgres-transfers:
+    image: postgres:16
+    container_name: paycore-postgres-transfers
+    environment:
+      POSTGRES_DB: transfersdb
+      POSTGRES_USER: transfers
+      POSTGRES_PASSWORD: transfers
+    ports:
+      - "5433:5432"
+    volumes:
+      - pgdata-transfers:/var/lib/postgresql/data
+
+volumes:
+  pgdata-accounts:
+  pgdata-transfers:

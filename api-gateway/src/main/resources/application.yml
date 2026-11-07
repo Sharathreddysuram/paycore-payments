@@ -1,0 +1,33 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  datasource:
+    url: jdbc:h2:mem:gatewaydb;DB_CLOSE_DELAY=-1
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+
+# Dev-only JWT secret. Override via the PAYCORE_JWT_SECRET env var in production.
+paycore:
+  jwt:
+    secret: ${PAYCORE_JWT_SECRET:dev-only-secret-change-me-in-production-0123456789}
+    expiration-hours: 24
+
+logging:
+  level:
+    com.sharath.paycore: INFO
